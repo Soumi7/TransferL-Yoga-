@@ -27,7 +27,7 @@ def classify():
     upload = request.files['data']
     image = load_image(upload)
     
-    model = load_model('/home/soumi/Downloads/best1.h5') 
+    model = load_model('best1.h5') 
     result=model.predict_classes(image)
 
     predicted_class = ("bridge", "child","tristep1","tristep2","tristep3")[result[0]]
