@@ -15,18 +15,13 @@ img = np.expand_dims(img, axis=0)
 
 
 result=model.predict_classes(img)
-print(result)
+
 predicted_class = ("bridge", "child","tristep1","tristep2","tristep3")[result[0]]
 print(predicted_class)
 
 
+#install tensorflow==2.2.0-rc3
 
 
 
 
-
-'''
-
-plt.title(get_label_name(result[0][0]))
-plt.show()
-'''
