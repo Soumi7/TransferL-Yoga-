@@ -11,7 +11,6 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from flask import Flask 
 from tensorflow.keras.preprocessing import image
 import numpy as np
-import cv2
 import h5py
 import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing import image
