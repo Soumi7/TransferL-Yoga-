@@ -26,22 +26,20 @@ def hello_world():
 def classify():
     app.logger.debug('Running classifier')
     upload = request.files['data']
-    IMG_SIZE=224
+    image = load_image(upload)
+    
     model = load_model('/home/soumi/Downloads/best1.h5') 
-
-
-    image_path="File2.jpg"
-    img = image.load_img(image_path, target_size=(IMG_SIZE, IMG_SIZE))
-    img = image.img_to_array(img)
-    img = np.expand_dims(img, axis=0)
-
-
-    result=model.predict_classes(img)
+    result=model.predict_classes(image)
 
     predicted_class = ("bridge", "child","tristep1","tristep2","tristep3")[result[0]]
     return(predicted_class)
 
-
+def load_image(filename):    
+    IMG_SIZE=224
+    test_image = image.load_img(filename, target_size = (IMG_SIZE, IMG_SIZE))
+    test_image = image.img_to_array(test_image)
+    test_image = np.expand_dims(test_image, axis = 0)
+    return test_image
 
 if __name__ == '__main__':
     #load_model()  # load model at the beginning once only
