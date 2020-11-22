@@ -1,10 +1,10 @@
 # TransferL-Yoga
 
-This repo demonstrates transfer learning on VGG16 with a yoga dataset of images.
+This repo demonstrates transfer learning on **VGG16** with a **yoga dataset** of images.
 
-The model endpoints are then made accessible by creating API endpoints with Flask.
+The model endpoints are then made accessible by creating **API** endpoints with **Flask**.
 
-Then this application is hosted online using docker and AWS EC2 instance.
+Then this application is hosted online using **docker** and **AWS EC2** instance.
 
 ## Agenda:
 
@@ -23,7 +23,7 @@ Then this application is hosted online using docker and AWS EC2 instance.
 
 (Here!)[https://github.com/Soumi7/TFNotebooks/blob/master/TransferLYoga.ipynb] is the link to my collab notebook.
 
-Download the saved model **best1.h5** from Google Drive.
+Download the saved model **best1.h5**.
 
 Save it in the same folder where you want to test inference logic. Here is my tf_inference.py code for inference logic:
 
@@ -31,29 +31,57 @@ Save it in the same folder where you want to test inference logic. Here is my tf
 import numpy as np
 import cv2
 import h5py
-import matplotlib.pyplot as plt
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 IMG_SIZE=224
-model = load_model('/home/soumi/Downloads/best1.h5') 
-
-
+model = load_model('/home/soumi/Downloads/best1.h5')
 image_path="File2.jpg"
 img = image.load_img(image_path, target_size=(IMG_SIZE, IMG_SIZE))
 img = image.img_to_array(img)
 img = np.expand_dims(img, axis=0)
-
-
 result=model.predict_classes(img)
-
 predicted_class = ("bridge", "child","tristep1","tristep2","tristep3")[result[0]]
 print(predicted_class)
-
-
-#install tensorflow==2.2.0-rc3
+#install tensorflow==2.2.0-rc3. Check collab version.
 ```
 
-Once this runs successfully, use same logic to create a Flask app. Create a file called app_y.py to run the app on localhost:80.
+Once this runs successfully, use same inference logic in the Flask app. Create a file called app_y.py to run the app on localhost:80.
+
+```
+from flask import Flask, request
+import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image img_to_array
+from tensorflow.keras.preprocessing import image
+import h5py
+
+app = Flask(__name__)
+
+@app.route('/') 
+def hello_world():
+    return "This API is running perfectly!"
+
+@app.route('/classifier/run',methods=['POST'])
+def classify():
+    app.logger.debug('Running classifier')
+    upload = request.files['data']
+    image = load_image(upload)    
+    model = load_model('best1.h5') 
+    result=model.predict_classes(image)
+    predicted_class = ("bridge", "child","tristep1","tristep2","tristep3")[result[0]]
+    return(predicted_class)
+
+def load_image(filename):    
+    IMG_SIZE=224
+    test_image = image.load_img(filename, target_size = (IMG_SIZE, IMG_SIZE))
+    test_image = image.img_to_array(test_image)
+    test_image = np.expand_dims(test_image, axis = 0)
+    return test_image
+
+if __name__ == '__main__':
+    #load_model()  # If you want to load model at the beginning once only
+    app.run(host='0.0.0.0', port=80)
+```
 
 Add a helloworld path to check its running. Add a classifier path to run the model. It takes a single image as input and returns the classname as output, here the yoga pose.
 
