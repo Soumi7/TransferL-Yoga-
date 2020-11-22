@@ -21,7 +21,7 @@ Then this application is hosted online using **docker** and **AWS EC2** instance
 
   3. Test the model with images from test directory and see if it gives satisfiable result.
 
-(Here!)[https://github.com/Soumi7/TFNotebooks/blob/master/TransferLYoga.ipynb] is the link to my collab notebook.
+[Here!](https://github.com/Soumi7/TFNotebooks/blob/master/TransferLYoga.ipynb) is the link to my collab notebook.
 
 Download the saved model **best1.h5**.
 
